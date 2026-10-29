@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Siamang Berayun</title>
+<style>
+:root{--bg:#231812;--card:#33241b;--ink:#fff3e8;--acc:#f2a766;--mut:#4a3226;--line:#b8694a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px}
+.wrap{display:grid;grid-template-columns:minmax(280px,480px) minmax(300px,560px);gap:32px;align-items:center;max-width:1100px;width:100%}
+.stage{aspect-ratio:1;border-radius:36px;overflow:hidden;border:2px solid #4a3226;cursor:pointer;background:linear-gradient(160deg,#2f5a3a,#9fc7a0 55%,#e7f0dd)}
+.stage svg{width:100%;height:100%;display:block}
+h1{font-size:clamp(40px,7vw,76px);line-height:.95;margin:0 0 14px;letter-spacing:-2px}
+#status{color:var(--acc);font-size:22px;font-weight:600;margin:0 0 22px}
+.card{background:var(--card);border:1px solid #4a3226;border-radius:28px;padding:22px 26px;margin-bottom:18px}
+.dash{display:flex;gap:5px;margin:6px 0 20px}
+.dash span{flex:1;height:4px;border-radius:2px;background:var(--mut);transition:background .1s}
+.dash span.on{background:var(--acc)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+button{font:inherit;font-size:18px;font-weight:600;border:0;border-radius:999px;padding:14px 28px;background:var(--mut);color:var(--ink);cursor:pointer}
+button.p{background:var(--acc);color:#2b1a0d}
+button:hover{filter:brightness(1.12)}
+.vol{display:flex;align-items:center;gap:12px;margin:14px 0 0 auto;justify-content:flex-end;color:#e8cdb8}
+input[type=range]{accent-color:#c9714f;width:170px}
+.lab{display:flex;justify-content:space-between;font-size:16px;color:#e8cdb8;margin:6px 0 16px}
+#graph{width:100%;height:auto;display:block}
+.hint{margin:14px 0 0;color:#e8cdb8}
+@media(max-width:820px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage" id="stage" title="Ketuk siamang">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#fff6d8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="500" height="500" fill="url(#glow)"/>
+      <!-- daun latar -->
+      <g fill="#1f4a2c" opacity=".55">
+        <ellipse cx="40" cy="60" rx="70" ry="22" transform="rotate(35 40 60)"/>
+        <ellipse cx="90" cy="120" rx="60" ry="18" transform="rotate(60 90 120)"/>
+        <ellipse cx="470" cy="70" rx="70" ry="22" transform="rotate(-35 470 70)"/>
+        <ellipse cx="430" cy="140" rx="60" ry="18" transform="rotate(-60 430 140)"/>
+        <ellipse cx="30" cy="470" rx="80" ry="24" transform="rotate(-20 30 470)"/>
+        <ellipse cx="480" cy="480" rx="80" ry="24" transform="rotate(20 480 480)"/>
+      </g>
+      <!-- dahan -->
+      <path d="M0 34 Q250 14 500 34" stroke="#5a3b24" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <g id="swing">
+        <line x1="250" y1="34" x2="250" y2="172" stroke="#6b8a3a" stroke-width="6"/>
+        <g id="legs" stroke="#17110d" stroke-width="15" stroke-linecap="round" fill="none">
+          <path d="M236 365 Q222 400 228 445"/>
+          <path d="M264 365 Q278 400 272 445"/>
+        </g>
+        <g id="body">
+          <g stroke="#17110d" stroke-width="14" stroke-linecap="round" fill="none">
+            <path d="M226 266 Q214 215 247 170"/>
+            <path d="M274 266 Q286 215 253 170"/>
+          </g>
+          <ellipse cx="250" cy="315" rx="40" ry="62" fill="#17110d"/>
+          <g fill="#17110d" opacity=".9">
+            <path d="M212 300l-10 8 12 2zM214 330l-11 6 13 3zM288 300l10 8-12 2zM286 330l11 6-13 3z"/>
+          </g>
+          <ellipse id="sac" cx="250" cy="276" rx="13" ry="10" fill="#d58f8a" stroke="#8a4a46" stroke-width="2"/>
+          <circle cx="250" cy="240" r="31" fill="#17110d"/>
+          <ellipse cx="250" cy="247" rx="19" ry="17" fill="#3b2f28"/>
+          <ellipse id="mouth" cx="250" cy="257" rx="6" ry="1.5" fill="#5a1a1a"/>
+          <circle cx="242" cy="240" r="3" fill="#fff"/><circle cx="258" cy="240" r="3" fill="#fff"/>
+          <circle cx="242.8" cy="240.4" r="1.4" fill="#000"/><circle cx="258.8" cy="240.4" r="1.4" fill="#000"/>
+          <path d="M243 249q-2 3 0 4M257 249q2 3 0 4" stroke="#0f0a08" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </g>
+      </g>
+      <text id="note" x="250" y="488" text-anchor="middle" font-size="22" font-weight="700" fill="#fff3e8" opacity="0">Uuu-waaah!</text>
+    </svg>
+  </div>
+
+  <div>
+    <h1>Siamang berayun</h1>
+    <p id="status">Siamang sedang berayun</p>
+
+    <div class="card">
+      <div class="dash" id="dash"></div>
+      <div class="row">
+        <button class="p" id="bSound">Aktifkan suara</button>
+        <button id="bOnce">Putar sekali</button>
+      </div>
+      <div class="vol"><label for="vol">Volume</label><input type="range" id="vol" min="0" max="1" step="0.01" value="0.5"></div>
+    </div>
+
+    <div class="card">
+      <svg id="graph" viewBox="0 0 620 130" preserveAspectRatio="none">
+        <line x1="1" y1="5" x2="1" y2="125" stroke="#b8694a" stroke-width="2"/>
+        <path id="area" fill="#7a4a33" stroke="#c9714f" stroke-width="2"/>
+        <line x1="0" y1="125" x2="620" y2="125" stroke="#c9714f" stroke-width="2"/>
+        <line id="head" x1="0" y1="5" x2="0" y2="125" stroke="#e8cdb8" stroke-width="1.5" stroke-dasharray="3 4"/>
+      </svg>
+      <div class="lab"><span>0 dtk</span><span>intensitas ayunan &amp; panggilan</span><span>8,0 dtk</span></div>
+      <button id="bPause">Jeda</button>
+      <p class="hint">Ketuk siamang untuk mengulang dan memutar suara.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DUR=8;
+// jadwal panggilan siamang: dentuman "uu-uu" yang makin cepat, lalu pekikan panjang
+const ev=[];
+// fase 1: dentuman (booming) yang makin cepat dari kantung suara
+[2.9,3.4,3.85,4.25,4.6,4.9,5.15,5.35].forEach((t,i)=>ev.push({t,d:.24,f0:200+i*8,f1:300+i*12,f2:240+i*8,w:0}));
+// fase 2: pekikan (whoop) naik lalu pekikan panjang menurun
+[[5.6,.45,600,1100,1000],[6.1,.45,700,1250,1150],[6.6,.5,800,1400,1250],[7.15,.75,900,1550,800]].forEach(a=>ev.push({t:a[0],d:a[1],f0:a[2],f1:a[3],f2:a[4],w:1}));
+
+const smooth=x=>{x=Math.min(1,Math.max(0,x));return x*x*(3-2*x)};
+const amp=t=>26-20*(smooth((t-2.6)/.5)-smooth((t-7.2)/.5));
+const ang=t=>amp(t)*Math.sin(2*Math.PI*t/4);
+const sac=t=>{let m=0;for(const e of ev)if(t>=e.t&&t<=e.t+e.d)m=Math.max(m,Math.sin(Math.PI*(t-e.t)/e.d));return m};
+
+// elemen
+const dash=$('dash');for(let i=0;i<24;i++)dash.appendChild(document.createElement('span'));
+const dashes=[...dash.children];
+let d='M0 125';
+for(let i=0;i<=200;i++){const t=i/200*DUR;d+=` L${(i/200*620).toFixed(1)} ${(125-105*Math.max(sac(t),Math.abs(ang(t))/26*.3)).toFixed(1)}`}
+$('area').setAttribute('d',d+' L620 125Z');
+
+// audio: sintesis suara siamang (sumber glotis + formant + resonansi kantung suara)
+// opsional: taruh rekaman asli bernama siamang.mp3 sefolder dengan file ini, otomatis dipakai
+let ctx,master,noiseBuf,soundOn=false,clipOK=false;
+const clip=new Audio();clip.preload='auto';
+clip.addEventListener('canplaythrough',()=>{clipOK=true});
+clip.src='siamang.mp3';
+function initAudio(){
+  if(!ctx){
+    ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=+$('vol').value;master.connect(ctx.destination);
+    noiseBuf=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);const c=noiseBuf.getChannelData(0);for(let i=0;i<c.length;i++)c[i]=Math.random()*2-1;
+  }
+  if(ctx.state==='suspended')ctx.resume();
+}
+function sound(e){
+  if(!soundOn)return;
+  if(clipOK){if(e===ev[0]){clip.currentTime=0;clip.volume=+$('vol').value;clip.play().catch(()=>{})}return}
+  if(!ctx)return;
+  const n=ctx.currentTime,D=e.d,W=e.w,end=n+D+.15;
+  const o=ctx.createOscillator();o.type='sawtooth';
+  o.frequency.setValueAtTime(e.f0,n);o.frequency.linearRampToValueAtTime(e.f1,n+D*.55);o.frequency.linearRampToValueAtTime(e.f2,n+D);
+  const vib=ctx.createOscillator(),vg=ctx.createGain();vib.frequency.value=W?7:5;vg.gain.value=W?e.f1*.035:4;vib.connect(vg);vg.connect(o.frequency);
+  const env=ctx.createGain(),pk=W?.9:1;
+  env.gain.setValueAtTime(0,n);env.gain.linearRampToValueAtTime(pk,n+(W?.05:.025));env.gain.setValueAtTime(pk,n+D*.7);env.gain.exponentialRampToValueAtTime(.001,n+D+.1);
+  const mix=ctx.createGain();mix.gain.value=4;
+  [[W?850:520,6,1],[W?2100:1150,8,.5]].forEach(([fr,q,g])=>{
+    const b=ctx.createBiquadFilter();b.type='bandpass';b.frequency.value=fr;b.Q.value=q;
+    const bg=ctx.createGain();bg.gain.value=g;o.connect(b);b.connect(bg);bg.connect(mix);
+  });
+  const sub=ctx.createOscillator();sub.type='sine';
+  sub.frequency.setValueAtTime(e.f0/2,n);sub.frequency.linearRampToValueAtTime(e.f1/2,n+D*.55);
+  const sg=ctx.createGain();sg.gain.value=W?.15:.9;sub.connect(sg);sg.connect(mix);
+  const ns=ctx.createBufferSource();ns.buffer=noiseBuf;ns.loop=true;
+  const nf=ctx.createBiquadFilter();nf.type='bandpass';nf.frequency.value=W?2000:700;nf.Q.value=1;
+  const ng=ctx.createGain();ng.gain.value=.12;ns.connect(nf);nf.connect(ng);ng.connect(mix);
+  const parts=[o,vib,sub,ns];
+  if(W){const tr=ctx.createOscillator(),tg=ctx.createGain();tr.frequency.value=16;tg.gain.value=.2;tr.connect(tg);tg.connect(env.gain);parts.push(tr)}
+  mix.connect(env);env.connect(master);
+  parts.forEach(x=>{x.start(n);x.stop(end)});
+}
+
+// animasi
+let t=0,prev=-1,playing=true,loop=true,last=performance.now(),noteT=0;
+function restart(once){t=0;prev=-1;playing=true;loop=!once;$('bPause').textContent='Jeda'}
+function render(){
+  const a=ang(t),s=sac(t);
+  $('swing').setAttribute('transform',`rotate(${a.toFixed(2)} 250 34)`);
+  $('legs').setAttribute('transform',`rotate(${(-a*.35).toFixed(2)} 250 365)`);
+  $('body').setAttribute('transform',`translate(0 ${(-3*s).toFixed(2)})`);
+  $('sac').setAttribute('transform',`translate(250 270) scale(${(1+1.9*s).toFixed(3)} ${(1+2.2*s).toFixed(3)}) translate(-250 -270)`);
+  $('mouth').setAttribute('ry',(1.5+6*s).toFixed(2));
+  $('note').setAttribute('opacity',s>.3?1:0);
+  $('head').setAttribute('x1',t/DUR*620);$('head').setAttribute('x2',t/DUR*620);
+  const on=Math.floor(t/DUR*24);dashes.forEach((x,i)=>x.classList.toggle('on',i<on));
+  $('status').textContent=!playing?(t===0?'Siamang sedang istirahat':'Dijeda'):(t>2.8&&t<7.9?'Siamang sedang bersuara':'Siamang sedang berayun');
+}
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(playing){
+    t+=dt;
+    for(const e of ev)if(e.t>prev&&e.t<=t)sound(e);
+    prev=t;
+    if(t>=DUR){if(loop){t-=DUR;prev=-1}else{t=0;playing=false;prev=-1;$('bPause').textContent='Lanjut'}}
+  }
+  render();requestAnimationFrame(frame);
+}
+
+// kontrol
+$('bSound').onclick=()=>{initAudio();soundOn=!soundOn;$('bSound').textContent=soundOn?'Matikan suara':'Aktifkan suara';$('bSound').classList.toggle('p',!soundOn)};
+$('bOnce').onclick=()=>restart(true);
+$('bPause').onclick=()=>{
+  if(!playing&&t===0){loop=true;playing=true;prev=-1;$('bPause').textContent='Jeda';return}
+  playing=!playing;if(!playing)clip.pause();$('bPause').textContent=playing?'Jeda':'Lanjut';
+};
+$('vol').oninput=e=>{if(master)master.gain.value=+e.target.value;clip.volume=+e.target.value};
+$('stage').onclick=()=>{initAudio();if(!soundOn){soundOn=true;$('bSound').textContent='Matikan suara';$('bSound').classList.remove('p')}restart(false)};
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
